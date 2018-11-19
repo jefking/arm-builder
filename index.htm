@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en" ng-app="libraryApp">
+
+<head>
+  <title>ARM Builder: Azure Resource Manager Template Builder</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <meta name="author" content="Jef King">
+  <link rel="icon" href="favicon.ico">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+    crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+    crossorigin="anonymous" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+
+<body>
+  <div class="container vertical-center">
+    <div class="panel panel-primary" ng-controller="arm">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <span class="glyphicon glyphicon-book"></span> Copy &amp; paste your Git Repo Url below, &amp; the generated template
+          will enable you to quickly create a <strong>azure.deploy.json</strong> which you can then check into your repo,
+          &amp; add to the Serverless Library (<a href="https://github.com/jefking/FunctionLibrary">here</a>)!
+        </h3>
+      </div>
+      <div class="panel-body">
+        <div class="input-group input-group-lg">
+          <span class="input-group-addon">URL</span>
+          <input type="url" class="form-control" ng-change="urlChange()" ng-model="data.variables.repoUrl" id="repo" placeholder="https://github.com/jefking/FunctionLibrary" />
+        </div>
+      </div>
+      <div class="panel-footer">
+        <div id="container" class="codeEditor"></div>
+      </div>
+    </div>
+  </div>
+
+  <nav class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="https://github.com/jefking/arm-builder" target="_blank" title="source code on GitHub"><span class="glyphicon glyphicon-file"></span></a>
+      </div>
+    </div>
+  </nav>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+    crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js" crossorigin="anonymous"></script>
+  <script src="node_modules/monaco-editor/min/vs/loader.js"></script>
+  <script src="node_modules/angular-applicationinsights/dist/angular-applicationinsights.min.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script type="text/javascript">
+    var appInsights = window.appInsights || function (config) { function i(config) { t[config] = function () { var i = arguments; t.queue.push(function () { t[config].apply(t, i) }) } } var t = { config: config }, u = document, e = window, o = "script", s = "AuthenticatedUserContext", h = "start", c = "stop", l = "Track", a = l + "Event", v = l + "Page", y = u.createElement(o), r, f; y.src = config.url || "https://az416426.vo.msecnd.net/scripts/a/ai.0.js"; u.getElementsByTagName(o)[0].parentNode.appendChild(y); try { t.cookie = u.cookie } catch (p) { } for (t.queue = [], t.version = "1.0", r = ["Event", "Exception", "Metric", "PageView", "Trace", "Dependency"]; r.length;)i("track" + r.pop()); return i("set" + s), i("clear" + s), i(h + a), i(c + a), i(h + v), i(c + v), i("flush"), config.disableExceptionTracking || (r = "onerror", i("_" + r), f = e[r], e[r] = function (config, i, u, e, o) { var s = f && f(config, i, u, e, o); return s !== !0 && t["_" + r](config, i, u, e, o), s }), t }({ instrumentationKey: "4dbdd9fd-f2aa-4ca7-9d4b-23f8a3db8ec7" }); window.appInsights = appInsights; appInsights.trackPageView();
+  </script>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-590e379817883933"></script>
+</body>
+
+</html>
