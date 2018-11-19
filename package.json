@@ -3,8 +3,7 @@
     "displayName": "Serverless Library",
     "description": "Serverless Library",
     "readme": "n/a",
-    "repository": {
-    },
+    "repository": {},
     "version": "0.0.3",
     "dependencies": {
         "applicationinsights": "^1.0.2",
