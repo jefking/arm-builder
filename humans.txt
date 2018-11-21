@@ -3,3 +3,4 @@ Site: http://jefking.me
 Location: Vancouver, BC, Canada
 
 Author: Nastassia Rashid
+Location: Vancouver, BC, Canada
