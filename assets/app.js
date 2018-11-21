@@ -1,17 +1,13 @@
 ﻿'use strict';
 
-var libraryApp = angular.module('libraryApp'
-    , ['ApplicationInsightsModule']
+var libraryApp = angular.module('libraryApp',
+    []
 );
-
-libraryApp.config(function ($routeProvider, $locationProvider, applicationInsightsServiceProvider) {
-    applicationInsightsServiceProvider.configure('ce23aecf-911b-4d57-b023-c7e0b4dafdc8', { appName: 'serverless-library' });
-});
 
 libraryApp.controller('arm', ['$scope', '$http', function ($scope, $http) {
     require.config({ paths: { 'vs': 'node_modules/monaco-editor/min/vs' } });
 
-    $http.get('assets/data/arm-input.js').success(function (data) {
+    $http.get('assets/arm-input.js').success(function (data) {
         $scope.data = data;
 
         require(['vs/editor/editor.main'], function () {
