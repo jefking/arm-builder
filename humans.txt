@@ -1,3 +1,5 @@
 Author: Jef King
 Site: http://jefking.me
 Location: Vancouver, BC, Canada
+
+Author: Nastassia Rashid
