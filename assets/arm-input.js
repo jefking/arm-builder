@@ -10,6 +10,9 @@
       }
    },
    "variables":{
+      "functionAppName": "[parameters('appName')]",
+      "hostingPlanName": "[concat(parameters('appName'), '-plan')]",
+      "applicationInsightsName": "[parameters('appName')]",
       "storageName":"[concat('function', uniqueString(parameters('siteName')))]",
       "contentShareName":"[toLower(parameters('siteName'))]",
       "repoUrl":"",
@@ -38,7 +41,7 @@
                   },
                   {
                      "name":"FUNCTIONS_EXTENSION_VERSION",
-                     "value":"~1"
+                     "value":"~2"
                   },
                   {
                      "name":"ROUTING_EXTENSION_VERSION",
@@ -47,6 +50,10 @@
                   {
                      "name":"WEBSITE_CONTENTSHARE",
                      "value":"[variables('contentShareName')]"
+                  },
+                  {
+                    "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
+                    "value": "[reference(resourceId('microsoft.insights/components/', variables('applicationInsightsName')), '2015-05-01').InstrumentationKey]"
                   }
                ]
             },
@@ -68,25 +75,51 @@
             }
          ],
          "dependsOn":[
-            "[resourceId('Microsoft.Storage/storageAccounts', variables('storageName'))]"
+            "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]",
+            "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]",
+            "[resourceId('microsoft.insights/components', variables('applicationInsightsName'))]"
          ],
          "location":"[resourceGroup().location]",
          "kind":"functionapp"
       },
       {
-         "apiVersion":"2015-05-01-preview",
-         "type":"Microsoft.Storage/storageAccounts",
-         "name":"[variables('storageName')]",
-         "location":"[resourceGroup().location]",
-         "properties":{
-            "accountType":"Standard_LRS"
+          "type": "Microsoft.Web/serverfarms",
+          "apiVersion": "2015-04-01",
+          "name": "[variables('hostingPlanName')]",
+          "location": "[resourceGroup().location]",
+          
+          "properties": {
+              "name": "[variables('hostingPlanName')]",
+              "computeMode": "Dynamic",
+              "sku": "Dynamic"
+          }
+      },
+      {
+         "type": "Microsoft.Storage/storageAccounts",
+         "name": "[variables('storageAccountName')]",
+         "apiVersion": "2018-07-01",
+         "kind": "StorageV2",
+         "location": "[resourceGroup().location]",
+         "sku": {
+             "name": "Standard_LRS",
+             "tier": "Standard"
+         },
+         "properties": {
+             "accessTier": "Hot"
          }
+      },
+      {
+        "apiVersion": "2018-05-01-preview",
+        "name": "[variables('applicationInsightsName')]",
+        "type": "microsoft.insights/components",
+        "location": "East US",
+        "tags": {
+          "[concat('hidden-link:', resourceGroup().id, '/providers/Microsoft.Web/sites/', variables('applicationInsightsName'))]": "Resource"
+        },
+        "properties": {
+          "ApplicationId": "[variables('applicationInsightsName')]",
+          "Request_Source": "IbizaWebAppExtensionCreate"
+        }
       }
-   ],
-   "outputs":{
-      "siteUri":{
-         "type":"string",
-         "value":"[concat('https://',reference(resourceId('Microsoft.Web/sites', parameters('siteName'))).hostNames[0])]"
-      }
-   }
+   ]
 }
